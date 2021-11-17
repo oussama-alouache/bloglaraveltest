@@ -24,15 +24,15 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         
-        if (request()->routeIs('post.store')) {
-            $imageRule = 'required|image';
-        } elseif (request()->routeIs('post.update')) {
-            $imageRule = 'sometimes|image';
+        if (request()->routeIs('posts.store')) {
+            $imagerule = 'required|image';
+        } elseif (request()->routeIs('posts.update')) {
+            $imagerule = 'sometimes|image';
         }
         return [
             'title' => 'required',
             'content' => 'required',
-            'image' => $imageRule,
+            'image' => 'sometimes',
             'category' => 'required'
 
         ];

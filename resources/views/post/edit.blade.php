@@ -15,7 +15,7 @@
             @method('put')
             @csrf
             <x-label for="title" value="Titre du post" />
-            <x-input id="title" name="title" :value="$post->title" />
+            <x-input id="title" name="title" value="{{$post->title}}" />
 
             <x-label for="content" value="Contenu du post" />
             <textarea id="content" name="content">{{ $post->content }}</textarea>

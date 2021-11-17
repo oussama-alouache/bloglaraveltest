@@ -19,9 +19,26 @@
             </div>
         @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
+            @foreach ( $posts as $post)
+            <a href="{{ route('post.edit', $post) }}" class="bg-yellow-500 px-2 py-3 block">Editer {{ $post->title }}</a>
+            <a href="#" class="text-red-600 hover:text-red-900 ml-3" onclick="
+                            event.preventDefault();
+                            document.getElementById('destroy-post-form').submit();
+                            ">Supprimer
+
+                                <form method="post" action="{{ route('post.destroy', $post) }}" id="destroy-post-form">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+                            </a>
+
+
+
+
+
+                @endforeach
+                    
+                
             </div>
         </div>
     </div>

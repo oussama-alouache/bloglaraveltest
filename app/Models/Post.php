@@ -21,6 +21,12 @@ class Post extends Model
             $post->category()->associate(request()->category);
             $post->user()->associate(auth()->user()->id);
         });
+        self::updating(function ($post) {
+            
+            $post->category()->associate(request()->category);
+        });
+
+
     }
 
     public function user()
