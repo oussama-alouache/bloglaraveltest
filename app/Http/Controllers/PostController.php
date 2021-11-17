@@ -75,7 +75,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        
+        if (Gate::denies('update-post', $post)) {
+            abort(403);
+        }
 
         $categories = Category::all();
 
@@ -90,9 +92,26 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
-        //
+        
+ 
+       
+        $arrayupdate = [
+            'title' => $request->title,
+            'content' => $request->content
+        ];
+        if ($request-> image <> NULL  ){
+            $imagename = $request->image->store ('posts');
+            $arrayupdate = array_merge ($arrayupdate,[
+                'image' => $imagename
+
+              
+            ]);
+           $post->update($arrayupdate);
+           return redirect()->route('dashboard')->with('success', 'Votre publication  a été modifer');     
+
+        }
     }
 
     /**
@@ -103,6 +122,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if (Gate::denies('delete-post', $post)) {
+            abort(403);
+        }
+
+        $post ->delete();
+        return redirect()->route('dashboard')->with('success', 'Votre publication  a été supprimer');     
+
     }
 }
